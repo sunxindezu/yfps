@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yufeng.yfps.mapper.SupplierMapper" >
+  <resultMap id="BaseResultMap" type="com.yufeng.yfps.model.Supplier" >
+    <id column="sup_id" property="supId" jdbcType="VARCHAR" />
+    <result column="sup_name" property="supName" jdbcType="VARCHAR" />
+    <result column="sup_off_addr" property="supOffAddr" jdbcType="VARCHAR" />
+    <result column="sup_off_tel_idd" property="supOffTelIdd" jdbcType="VARCHAR" />
+    <result column="sup_off_tel01" property="supOffTel01" jdbcType="VARCHAR" />
+    <result column="sup_off_tel02" property="supOffTel02" jdbcType="VARCHAR" />
+    <result column="sup_off_fax" property="supOffFax" jdbcType="VARCHAR" />
+    <result column="sup_remk" property="supRemk" jdbcType="VARCHAR" />
+    <result column="sup_cdate" property="supCdate" jdbcType="TIMESTAMP" />
+    <result column="sup_cuser" property="supCuser" jdbcType="VARCHAR" />
+    <result column="sup_adate" property="supAdate" jdbcType="TIMESTAMP" />
+    <result column="sup_auser" property="supAuser" jdbcType="VARCHAR" />
+    <result column="sup_type" property="supType" jdbcType="VARCHAR" />
+    <result column="sup_comptype" property="supComptype" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    sup_id, sup_name, sup_off_addr, sup_off_tel_idd, sup_off_tel01, sup_off_tel02, sup_off_fax,
+    sup_remk, sup_cdate, sup_cuser, sup_adate, sup_auser, sup_type, sup_comptype
+  </sql>
+  <select id="selectall" resultMap="BaseResultMap" parameterType="com.yufeng.yfps.model.Supplier" >
+    select
+    <include refid="Base_Column_List" />
+    from supplier
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.yufeng.yfps.model.SupplierExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from supplier
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from supplier
+    where sup_id = #{supId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from supplier
+    where sup_id = #{supId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.yufeng.yfps.model.SupplierExample" >
+    delete from supplier
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yufeng.yfps.model.Supplier" >
+    insert into supplier (sup_id, sup_name, sup_off_addr,
+      sup_off_tel_idd, sup_off_tel01, sup_off_tel02,
+      sup_off_fax, sup_remk, sup_cdate,
+      sup_cuser, sup_adate, sup_auser,
+      sup_type, sup_comptype)
+    values (#{supId,jdbcType=VARCHAR}, #{supName,jdbcType=VARCHAR}, #{supOffAddr,jdbcType=VARCHAR},
+      #{supOffTelIdd,jdbcType=VARCHAR}, #{supOffTel01,jdbcType=VARCHAR}, #{supOffTel02,jdbcType=VARCHAR},
+      #{supOffFax,jdbcType=VARCHAR}, #{supRemk,jdbcType=VARCHAR}, #{supCdate,jdbcType=TIMESTAMP},
+      #{supCuser,jdbcType=VARCHAR}, #{supAdate,jdbcType=TIMESTAMP}, #{supAuser,jdbcType=VARCHAR},
+      #{supType,jdbcType=VARCHAR}, #{supComptype,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yufeng.yfps.model.Supplier" >
+    insert into supplier
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="supId != null" >
+        sup_id,
+      </if>
+      <if test="supName != null" >
+        sup_name,
+      </if>
+      <if test="supOffAddr != null" >
+        sup_off_addr,
+      </if>
+      <if test="supOffTelIdd != null" >
+        sup_off_tel_idd,
+      </if>
+      <if test="supOffTel01 != null" >
+        sup_off_tel01,
+      </if>
+      <if test="supOffTel02 != null" >
+        sup_off_tel02,
+      </if>
+      <if test="supOffFax != null" >
+        sup_off_fax,
+      </if>
+      <if test="supRemk != null" >
+        sup_remk,
+      </if>
+      <if test="supCdate != null" >
+        sup_cdate,
+      </if>
+      <if test="supCuser != null" >
+        sup_cuser,
+      </if>
+      <if test="supAdate != null" >
+        sup_adate,
+      </if>
+      <if test="supAuser != null" >
+        sup_auser,
+      </if>
+      <if test="supType != null" >
+        sup_type,
+      </if>
+      <if test="supComptype != null" >
+        sup_comptype,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="supId != null" >
+        #{supId,jdbcType=VARCHAR},
+      </if>
+      <if test="supName != null" >
+        #{supName,jdbcType=VARCHAR},
+      </if>
+      <if test="supOffAddr != null" >
+        #{supOffAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="supOffTelIdd != null" >
+        #{supOffTelIdd,jdbcType=VARCHAR},
+      </if>
+      <if test="supOffTel01 != null" >
+        #{supOffTel01,jdbcType=VARCHAR},
+      </if>
+      <if test="supOffTel02 != null" >
+        #{supOffTel02,jdbcType=VARCHAR},
+      </if>
+      <if test="supOffFax != null" >
+        #{supOffFax,jdbcType=VARCHAR},
+      </if>
+      <if test="supRemk != null" >
+        #{supRemk,jdbcType=VARCHAR},
+      </if>
+      <if test="supCdate != null" >
+        #{supCdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="supCuser != null" >
+        #{supCuser,jdbcType=VARCHAR},
+      </if>
+      <if test="supAdate != null" >
+        #{supAdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="supAuser != null" >
+        #{supAuser,jdbcType=VARCHAR},
+      </if>
+      <if test="supType != null" >
+        #{supType,jdbcType=VARCHAR},
+      </if>
+      <if test="supComptype != null" >
+        #{supComptype,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.yufeng.yfps.model.SupplierExample" resultType="java.lang.Integer" >
+    select count(*) from supplier
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update supplier
+    <set >
+      <if test="record.supId != null" >
+        sup_id = #{record.supId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.supName != null" >
+        sup_name = #{record.supName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.supOffAddr != null" >
+        sup_off_addr = #{record.supOffAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.supOffTelIdd != null" >
+        sup_off_tel_idd = #{record.supOffTelIdd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.supOffTel01 != null" >
+        sup_off_tel01 = #{record.supOffTel01,jdbcType=VARCHAR},
+      </if>
+      <if test="record.supOffTel02 != null" >
+        sup_off_tel02 = #{record.supOffTel02,jdbcType=VARCHAR},
+      </if>
+      <if test="record.supOffFax != null" >
+        sup_off_fax = #{record.supOffFax,jdbcType=VARCHAR},
+      </if>
+      <if test="record.supRemk != null" >
+        sup_remk = #{record.supRemk,jdbcType=VARCHAR},
+      </if>
+      <if test="record.supCdate != null" >
+        sup_cdate = #{record.supCdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.supCuser != null" >
+        sup_cuser = #{record.supCuser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.supAdate != null" >
+        sup_adate = #{record.supAdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.supAuser != null" >
+        sup_auser = #{record.supAuser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.supType != null" >
+        sup_type = #{record.supType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.supComptype != null" >
+        sup_comptype = #{record.supComptype,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update supplier
+    set sup_id = #{record.supId,jdbcType=VARCHAR},
+      sup_name = #{record.supName,jdbcType=VARCHAR},
+      sup_off_addr = #{record.supOffAddr,jdbcType=VARCHAR},
+      sup_off_tel_idd = #{record.supOffTelIdd,jdbcType=VARCHAR},
+      sup_off_tel01 = #{record.supOffTel01,jdbcType=VARCHAR},
+      sup_off_tel02 = #{record.supOffTel02,jdbcType=VARCHAR},
+      sup_off_fax = #{record.supOffFax,jdbcType=VARCHAR},
+      sup_remk = #{record.supRemk,jdbcType=VARCHAR},
+      sup_cdate = #{record.supCdate,jdbcType=TIMESTAMP},
+      sup_cuser = #{record.supCuser,jdbcType=VARCHAR},
+      sup_adate = #{record.supAdate,jdbcType=TIMESTAMP},
+      sup_auser = #{record.supAuser,jdbcType=VARCHAR},
+      sup_type = #{record.supType,jdbcType=VARCHAR},
+      sup_comptype = #{record.supComptype,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yufeng.yfps.model.Supplier" >
+    update supplier
+    <set >
+      <if test="supName != null" >
+        sup_name = #{supName,jdbcType=VARCHAR},
+      </if>
+      <if test="supOffAddr != null" >
+        sup_off_addr = #{supOffAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="supOffTelIdd != null" >
+        sup_off_tel_idd = #{supOffTelIdd,jdbcType=VARCHAR},
+      </if>
+      <if test="supOffTel01 != null" >
+        sup_off_tel01 = #{supOffTel01,jdbcType=VARCHAR},
+      </if>
+      <if test="supOffTel02 != null" >
+        sup_off_tel02 = #{supOffTel02,jdbcType=VARCHAR},
+      </if>
+      <if test="supOffFax != null" >
+        sup_off_fax = #{supOffFax,jdbcType=VARCHAR},
+      </if>
+      <if test="supRemk != null" >
+        sup_remk = #{supRemk,jdbcType=VARCHAR},
+      </if>
+      <if test="supCdate != null" >
+        sup_cdate = #{supCdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="supCuser != null" >
+        sup_cuser = #{supCuser,jdbcType=VARCHAR},
+      </if>
+      <if test="supAdate != null" >
+        sup_adate = #{supAdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="supAuser != null" >
+        sup_auser = #{supAuser,jdbcType=VARCHAR},
+      </if>
+      <if test="supType != null" >
+        sup_type = #{supType,jdbcType=VARCHAR},
+      </if>
+      <if test="supComptype != null" >
+        sup_comptype = #{supComptype,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where sup_id = #{supId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yufeng.yfps.model.Supplier" >
+    update supplier
+    set sup_name = #{supName,jdbcType=VARCHAR},
+      sup_off_addr = #{supOffAddr,jdbcType=VARCHAR},
+      sup_off_tel_idd = #{supOffTelIdd,jdbcType=VARCHAR},
+      sup_off_tel01 = #{supOffTel01,jdbcType=VARCHAR},
+      sup_off_tel02 = #{supOffTel02,jdbcType=VARCHAR},
+      sup_off_fax = #{supOffFax,jdbcType=VARCHAR},
+      sup_remk = #{supRemk,jdbcType=VARCHAR},
+      sup_cdate = #{supCdate,jdbcType=TIMESTAMP},
+      sup_cuser = #{supCuser,jdbcType=VARCHAR},
+      sup_adate = #{supAdate,jdbcType=TIMESTAMP},
+      sup_auser = #{supAuser,jdbcType=VARCHAR},
+      sup_type = #{supType,jdbcType=VARCHAR},
+      sup_comptype = #{supComptype,jdbcType=VARCHAR}
+    where sup_id = #{supId,jdbcType=VARCHAR}
+  </update>
+</mapper>
